@@ -9,7 +9,7 @@
             <?php
             $json = file_get_contents('http://api-service/');
             $obj = json_decode($json);
-	          $brevets = $obj->Laptops; //TODO change to Brevets later
+	          $brevets = $obj->All; //TODO change to Brevets later
             foreach ($brevets as $b) {
                 echo "<li>$b</li>";
             }

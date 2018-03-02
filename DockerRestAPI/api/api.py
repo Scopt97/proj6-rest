@@ -18,11 +18,12 @@ class All(Resource):
             top = request.args.get('top')
             top = int(top)
             data = []
-            data = db.tododb.find().limit(top)
+            data = db.tododb.find().limit(top+1)  # top+1 because just 'top' returned 1 value too few when sorting
 
         else:
             data = db.tododb.find()
 
+        data.sort('name')
         open_close = {}
 
         for pair in data:
@@ -38,11 +39,12 @@ class Open(Resource):
             top = request.args.get('top')
             top = int(top)
             data = []
-            data = db.tododb.find().limit(top)
+            data = db.tododb.find().limit(top+1)
 
         else:
             data = db.tododb.find()
 
+        data.sort('name')
         opens = {}
 
         for pair in data:
@@ -59,11 +61,12 @@ class Close(Resource):
             top = request.args.get('top')
             top = int(top)
             data = []
-            data = db.tododb.find().limit(top)
+            data = db.tododb.find().limit(top+1)
 
         else:
             data = db.tododb.find()
 
+        data.sort('name')
         closures = {}
 
         for pair in data:
@@ -80,11 +83,12 @@ class AllCSV(Resource):
             top = request.args.get('top')
             top = int(top)
             data = []
-            data = db.tododb.find().limit(top)
+            data = db.tododb.find().limit(top+1)
 
         else:
             data = db.tododb.find()
 
+        data.sort('name')
         csv = "km, open, close\n"  # column header
 
         for pair in data:
@@ -102,11 +106,12 @@ class OpenCSV(Resource):
             top = request.args.get('top')
             top = int(top)
             data = []
-            data = db.tododb.find().limit(top)
+            data = db.tododb.find().limit(top+1)
 
         else:
             data = db.tododb.find()
 
+        data.sort('name')
         opens = "km, open\n"  # column header
 
         for pair in data:
@@ -123,11 +128,12 @@ class CloseCSV(Resource):
             top = request.args.get('top')
             top = int(top)
             data = []
-            data = db.tododb.find().limit(top)
+            data = db.tododb.find().limit(top+1)
 
         else:
             data = db.tododb.find()
 
+        data.sort('name')
         closures = "km, close\n"  # column header
 
         for pair in data:

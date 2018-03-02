@@ -1,31 +1,21 @@
 # Project 6: Brevet time calculator service
 
-Simple listing service from project 5 stored in MongoDB database.
 
-## What is in this repository
+## What?
 
-You have a minimal implementation of Docker compose in DockerRestAPI folder,
-using which you can create REST API-based services (as demonstrated in 
-class). Refer to the lecture slide "05a-Mongo-Docker-Compose.pdf" (dated 
-02/15/2018) for information about how to use Docker compose. 
+An ACPbrevet control time calculator that includes a RESTful API for getting data from the database, either in json or csv format. Based on the calculator: https://rusa.org/octime_acp.html and rules: https://rusa.org/octime_alg.html , https://rusa.org/pages/rulesForRiders . This is a webserver that runs in docker-compose and uses flask, ajax, and mongodb (pymongo).
 
-## Recap 
 
-You will reuse *your* code from project
-5 (https://github.com/UOCIS322/proj5-mongo). Recall: you created the 
-following functionalities. 1) Two buttons ("Submit") and ("Display") in
-the page where you have controle times. 2) On clicking the Submit 
-button, the control times were be entered into the database. 3) On 
-clicking the Display button, the entries from the database were be 
-displayed in a new page. You also handled error cases appropriately. 
+## Rules
 
-## Functionality you will add
+Times follow the table linked in .../octime_alg.html above. Based on the min and max speeds, and the distance from the start to the control, the open and close times for each control are calculated. Only the part of the distance within a threshold follows that min/max speed (e.g. a control at 300km has the first 200km treated as 0-200 and the last 100km treated as 200-400). The time for the final control is based on the given brevet distance, and the final control can be no more that 20% longer than the given brevet distance.
 
-This project has three parts: 
 
-* You will design RESTful service to expose what is stored in MongoDB.
-Specifically, you'll use the boilerplate given in DockerRestAPI folder, and
-create the following:
+## Functionality
+
+This project has three parts (use the port for the api): 
+
+* A RESTful service to expose what is stored in MongoDB using the following:
 
    "http://<host:port>/listAll" should return all open and close times in the database
    
@@ -33,8 +23,7 @@ create the following:
    
    "http://<host:port>/listCloseOnly" should return close times only
 
-* You will also design two different representations: one in csv and one 
- in json. For the above, JSON should be your default representation. 
+* Two different representations: one in csv and one in json. For the above, JSON is be is default representation. 
 
    "http://<host:port>/listAll/csv" should return all open and close times in CSV format
    
@@ -48,25 +37,30 @@ create the following:
    
    "http://<host:port>/listCloseOnly/json" should return close times only in JSON format
 
-* You will also add a query parameter to get top "k" open and close
-times. For examples, see below.
+* Also a query parameter to get top "k" open and close times. For examples, see below.
 
    "http://<host:port>/listOpenOnly/csv?top=3" should return top 3 open times only (in ascending order) in CSV format 
    
    "http://<host:port>/listOpenOnly/json?top=5" should return top 5 open times only (in ascending order) in JSON format
 
-* You'll also design consumer programs (e.g., in jQuery) to use the service
-  that you expose. "website" folder inside DockerRestAPI is an example of that. It is
-  uses PHP. You're welcome to use either PHP or jQuery to consume your
-  services. NOTE: your consumer program should be in a different container like
-  example in DockerRestAPI.
+* A consumer program written in PHP
 
-## Tasks
 
-You'll turn in your credentials.ini using which we will get the following:
+## Use
 
-* The working application with three parts.
+Clone the repo, cd to DockerRestAPI, and run `sudo docker-compose up`
 
-* Dockerfile
+The calculator is on port 5002, the api (api-service) is on port 5001, the consumer is on port 5000.
 
-* docker-compose.yml
+The "Submit" button sends the control data to the mongo database. The "Display" button displays all controls in the database.
+
+requires: docker, docker-compose, python3 (and pip). Other requirements are installed into the container upon running.
+
+
+## Changes from proj5
+
+The calculator site functions the same. The API and comsumer are new.
+
+
+
+### Author: Kyle Nielsen   Contact: kylen@uoregon.edu

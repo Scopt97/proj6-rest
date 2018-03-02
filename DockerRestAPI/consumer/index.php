@@ -4,14 +4,17 @@
     </head>
 
     <body>
-        <h1>List of brevets</h1>
+        <h1>List of control times</h1>
+	<h2> alternating open/close</h2>
         <ul>
             <?php
             $json = file_get_contents('http://api-service/');
             $obj = json_decode($json);
-	          $brevets = $obj->All; //TODO change to Brevets later
-            foreach ($brevets as $b) {
-                echo "<li>$b</li>";
+	          $brevets = $obj->All;
+            foreach ($obj as $control) {
+		foreach ($control as $time) {
+                    echo "<li>$time</li>";
+		}
             }
             ?>
         </ul>
